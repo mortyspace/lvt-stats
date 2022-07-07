@@ -12,7 +12,12 @@ async def client():
 
 
 @pytest_asyncio.fixture
-async def container():
+async def app():
     await APP_CONTAINER.init_resources()
     yield APP_CONTAINER
     await APP_CONTAINER.shutdown_resources()
+
+
+@pytest_asyncio.fixture
+async def cursor(app):
+    return await app.resources.db.cursor()

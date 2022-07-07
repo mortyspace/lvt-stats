@@ -7,3 +7,6 @@ resources:
     pool_timeout: 10
   redis:
     url: "redis://localhost/1"
+features:
+  auth:
+    key: 123asd

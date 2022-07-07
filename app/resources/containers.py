@@ -9,6 +9,7 @@ from .providers import (
     get_db_engine,
     get_redis,
 )
+from .services import DBCursorService
 
 
 class DBContainer(containers.DeclarativeContainer):
@@ -25,6 +26,7 @@ class DBContainer(containers.DeclarativeContainer):
     )
     cleanup = providers.Coroutine(cleanup_db_connection, connections)
     connection = providers.Coroutine(get_db_connection, engine, connections)
+    cursor = providers.Factory(DBCursorService, connection)
 
 
 class ResourcesContainer(containers.DeclarativeContainer):

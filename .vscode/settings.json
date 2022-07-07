@@ -20,5 +20,14 @@
         "tests"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": ".py",
+                "isAsync": false,
+                "cmd": "./.venv/bin/pre-commit run --files ${file}"
+            }
+        ]
+    }
 }

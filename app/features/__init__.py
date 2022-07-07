@@ -1,11 +1,11 @@
 from dependency_injector import containers, providers
 
-from .content.containers import ContentContainer
+from .stats.containers import StatsContainer
 
 
 class FeaturesContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
     resources = providers.DependenciesContainer()
-    content: ContentContainer = providers.Container(
-        ContentContainer, resources=resources, config=config.content
+    stats: StatsContainer = providers.Container(
+        StatsContainer, resources=resources, config=config.stats
     )  # type: ignore

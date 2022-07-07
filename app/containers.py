@@ -6,7 +6,7 @@ from .resources.containers import ResourcesContainer
 
 class AppContainer(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
-        packages=(".features.content",)
+        packages=(".features.stats",)
     )
     config = providers.Configuration()
     resources: ResourcesContainer = providers.Container(
