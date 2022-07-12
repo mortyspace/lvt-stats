@@ -21,10 +21,13 @@
 - db tables always lower case `some_table_name`, values upper case, for example `CONTENT_TABLE = 'content', not 'contents'
 
 ## Helpful urls
-- `REST` https://devhints.io/rest-api
+- `REST` https://devhints.io/rest-api -> but here we use only SINGULAR form of entities so no plural confusion -> "one" or "many" for requests like "get_one_wallet" or "get_wallet_many" -> ```get_{entity}_{action or subentity}_{one,many}```
 
 
 ## TODO:
+- automatic test run on code change -> watchdog like autoreload etc.
+- docker management (containers and additional service timeouts), cache running containers in case we need to so for faster test runs
+- database migration and clear per each test (create n databases (?) and cache)
 - branch management:
     -> production branch (last production version with tag of latest release) -> auto commit creates a tag (not pushed into prod, only manually from github workflow -> workflow creates pull request into main rebase)
     -> hotfix/someshing needs to be fixed

@@ -1,18 +1,17 @@
+import importlib
+
 import asyncpg
 import sqlalchemy as sa
-from dependency_injector import providers
-from fastapi import APIRouter, FastAPI, Request
+from fastapi import FastAPI, Request
 from fastapi.responses import ORJSONResponse
 
 from . import APP_CONTAINER
 
 API = FastAPI(default_response_class=ORJSONResponse)
 
-# routes
-for obj in APP_CONTAINER.traverse(types=(providers.Object,)):
-    api = obj()
-    if isinstance(api, APIRouter):
-        API.include_router(api)
+for package in APP_CONTAINER.wiring_config.packages:
+    api_module = importlib.import_module(f"{package}.api", package=__package__)
+    API.include_router(api_module.API)
 
 
 # events
@@ -48,17 +47,17 @@ async def sa_timeout_error_exception_handler(
     )
 
 
-@API.exception_handler(sa.exc.IntegrityError)
-@API.exception_handler(sa.exc.InterfaceError)
-@API.exception_handler(sa.exc.DBAPIError)
-async def sa_integrity_error_exception_handler(
-    request: Request, exc: sa.exc.IntegrityError
-):
-    orig = str(exc.orig)
-    if "asyncpg.exceptions.UniqueViolationError" in orig:
-        message = f"Database unique value violation: {orig.split('>: ')[1]}"
-        return ORJSONResponse(status_code=409, content={"message": message})
+# @API.exception_handler(sa.exc.IntegrityError)
+# @API.exception_handler(sa.exc.InterfaceError)
+# @API.exception_handler(sa.exc.DBAPIError)
+# async def sa_integrity_error_exception_handler(
+#     request: Request, exc: sa.exc.IntegrityError
+# ):
+#     orig = str(exc.orig)
+#     if "asyncpg.exceptions.UniqueViolationError" in orig:
+#         message = f"Database unique value violation: {orig.split('>: ')[1]}"
+#         return ORJSONResponse(status_code=409, content={"message": message})
 
-    return ORJSONResponse(
-        status_code=500, content={"message": f"Database error: {exc}"}
-    )
+#     return ORJSONResponse(
+#         status_code=500, content={"message": f"Database error: {exc}"}
+#     )

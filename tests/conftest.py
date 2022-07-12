@@ -6,15 +6,27 @@ from app.api import API
 
 
 @pytest_asyncio.fixture
-async def client():
+async def client(app):
     async with AsyncClient(app=API, base_url="http://test.com") as cl:
         yield cl
 
 
 @pytest_asyncio.fixture
-async def app():
+async def postgresql():
+    pass
+
+
+@pytest_asyncio.fixture
+async def redis():
+    pass
+
+
+@pytest_asyncio.fixture
+async def app(postgresql, redis):
     await APP_CONTAINER.init_resources()
     yield APP_CONTAINER
+
+    # TODO: auto create and clear db with migration
     await APP_CONTAINER.shutdown_resources()
 
 

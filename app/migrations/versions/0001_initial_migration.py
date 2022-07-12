@@ -2,7 +2,7 @@
 
 Revision ID: 0001
 Revises:
-Created Date: 2022-07-08 01:03:29.438286
+Created Date: 2022-07-10 19:43:57.892832
 
 """
 import sqlalchemy as sa
@@ -31,7 +31,7 @@ def upgrade():
     op.create_table(
         "transaction",
         sa.Column("id", sa.String(length=66), nullable=False),
-        sa.Column("executed_at", sa.DateTime(), nullable=False),
+        sa.Column("executed_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("wallet", sa.String(length=42), nullable=False),
         sa.Column(
             "action",

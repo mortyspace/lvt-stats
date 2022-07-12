@@ -4,9 +4,6 @@
     "python.linting.flake8Enabled": true,
     "python.analysis.autoImportCompletions": false,
     "mypy.runUsingActiveInterpreter": true,
-    "editor.rulers": [79],
-    "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 79,
     "files.exclude": {
         "**/.git": true,
         "**/.DS_Store": true,
@@ -21,13 +18,10 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "emeraldwalk.runonsave": {
-        "commands": [
-            {
-                "match": ".py",
-                "isAsync": false,
-                "cmd": "./.venv/bin/pre-commit run --files ${file}"
-            }
-        ]
-    }
+    // "customLocalFormatters.formatters": [
+    //     {
+    //       "command": "./.venv/bin/pre-commit run --files",
+    //       "languages": ["yml", "py"]
+    //     }
+    // ]
 }
